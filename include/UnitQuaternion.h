@@ -95,15 +95,35 @@ class UnitQuaternion : public Quaternion {
     UnitQuaternion( const TooN::Matrix<3,3>& R );
 
     /*
+        UnitQuaternion from Rotation Matrix w. continuity
+    */
+    UnitQuaternion( const TooN::Matrix<3,3>& R, const UnitQuaternion& oldQ );
+
+    /*
         UnitQuaternion from Homogeneous Transformation Matrix
     */
     UnitQuaternion( const TooN::Matrix<4,4>& T );
+
+    /*
+        UnitQuaternion from Homogeneous Transformation Matrix w. continuity
+    */
+    UnitQuaternion( const TooN::Matrix<4,4>& T, const UnitQuaternion& oldQ );
+
+    /*
+        A copy constructor
+    */
+    UnitQuaternion( const UnitQuaternion& q ) = default;
 
     /*
         A copy constructor form the parent class Quaternion
         Note: if the input is not unit it will be normalized and a warning will be printed
     */
     UnitQuaternion( const Quaternion& q );
+
+    /*
+        A copy constructor for quaternion Continuity
+    */
+    UnitQuaternion( const UnitQuaternion& q, const UnitQuaternion& oldQ );
 
     /*
         UnitQuaternion from Axis-Angle
@@ -126,6 +146,8 @@ class UnitQuaternion : public Quaternion {
          See also Quaternion.string.
     */
     void display() const;
+
+    static UnitQuaternion continuity(const UnitQuaternion& q, const UnitQuaternion& oldQ);
     /*==========END VARIE=========*/
 
     /*======UNITQUATERNION FUNCTIONS======*/

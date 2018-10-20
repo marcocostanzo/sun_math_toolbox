@@ -85,9 +85,17 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         _v = uq.getV();
     }
 
+    UnitQuaternion::UnitQuaternion( const Matrix<3,3>& R, const UnitQuaternion& oldQ ):
+        UnitQuaternion( continuity( UnitQuaternion( R ) , oldQ ) )
+        {}
+
     //From Homogeneous Transform
     UnitQuaternion::UnitQuaternion( const Matrix<4,4>& T ):
         UnitQuaternion( Matrix<3,3>(T.slice<0,0,3,3>()) )
+        {}
+
+    UnitQuaternion::UnitQuaternion( const Matrix<4,4>& T, const UnitQuaternion& oldQ ):
+        UnitQuaternion( continuity( UnitQuaternion( T ) , oldQ ) )
         {}
 
     UnitQuaternion::UnitQuaternion( const Quaternion& q ){
@@ -103,6 +111,12 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         _s = uq[0];
         _v = uq.slice<1,3>();
     }
+
+    
+    //A copy constructor for quaternion Continuity  
+    UnitQuaternion::UnitQuaternion( const UnitQuaternion& q, const UnitQuaternion& oldQ )
+        : UnitQuaternion( continuity( q , oldQ ) )
+    {}
 
     //From Axis Angle
     UnitQuaternion::UnitQuaternion( const AngVec& av ){
@@ -129,6 +143,15 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
     void UnitQuaternion::display()  const{
         cout << "UnitQuaternion: " << *this << endl;
     }
+
+
+    UnitQuaternion UnitQuaternion::continuity(const UnitQuaternion& q, const UnitQuaternion& oldQ){
+        if( (q.getV() * oldQ.getV()) < -0.01 ){
+            return (-q);
+        }
+        return q;
+    }
+    
     /*==========END VARIE=========*/
 
     /*======UNITQUATERNION FUNCTIONS======*/
@@ -260,7 +283,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
     Quaternion UnitQuaternion::dot(const Vector<3>& omega) const { 
         //UnitQuaternion.pure(omega) * (*this)
         Matrix<3,3> E = _s*Identity(3) - skew(_v);
-        return Quaternion( -_v*omega, E*omega );
+        return Quaternion( -0.5*_v*omega, 0.5*E*omega );
     }
 
     /*
