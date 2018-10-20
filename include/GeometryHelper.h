@@ -83,4 +83,16 @@ the first occurrence of the greather element in the vector
 */
 int index_max( const TooN::Vector<>& v );
 
+/*
+    Compute pinv as Damped Least Square (DLS)
+*/
+TooN::Matrix<> pinv_DLS( const TooN::Matrix<>& M, double damping);
+
+/*
+    Compute a Projector in the null space of M
+*/
+TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M , const TooN::Matrix<>& M_pinv );
+
+TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M, double condition_number = 20.0 );
+
 #endif
