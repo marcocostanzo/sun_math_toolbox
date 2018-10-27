@@ -157,3 +157,32 @@ Matrix<> nullSpaceProj( const Matrix<>& M , double condition_number ){
     SVD<> M_svd(M);
     return Identity(M.num_cols()) - M_svd.backsub( M, condition_number);
 }
+
+/*
+    Compute the derivate of a poly
+    coeff = [a_n a_n_1 a_n_2 ... a_0]
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+*/
+Vector<> polydiff( const Vector<>& coeff ){
+    
+    Vector<> out = Zeros( coeff.size() - 1 );
+
+    for(int i = 0; i < out.size(); i++){
+        out[i] = coeff[i]*( out.size() - i );
+    }
+    return out;
+}
+
+/*
+    Evaluate the poly in the point x
+    coeff = [a_n a_n_1 a_n_2 ... a_0]
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+*/
+double polyval( const Vector<>& coeff , double x ){
+    double out = 0.0;
+    for( int i = 0; i<(coeff.size()-1); i++ ){
+        out += coeff[i] * pow( x , ( coeff.size() -1 - i ) );
+    }
+    out += coeff[coeff.size()-1];
+    return out;
+}

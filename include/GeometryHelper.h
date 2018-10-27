@@ -95,4 +95,18 @@ TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M , const TooN::Matrix<>& M_
 
 TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M, double condition_number = 20.0 );
 
+/*
+    Compute the derivate of a poly
+    coeff = [a_n a_n_1 a_n_2 ... a_0]
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+*/
+TooN::Vector<> polydiff( const TooN::Vector<>& coeff );
+
+/*
+    Evaluate the poly in the point x
+    coeff = [a_n a_n_1 a_n_2 ... a_0]
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+*/
+double polyval( const TooN::Vector<>& coeff , double x );
+
 #endif
