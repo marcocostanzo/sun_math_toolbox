@@ -211,7 +211,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         double theta = acos(cosTheta);
 
         //check s range
-        if(s<0 | s>1){
+        if(s<0 || s>1){
             cout << PORTING_FUNCTIONS_FAIL_COLOR "[UnitQuaternion]: error in interp() | s must be in [0 1] | s = " << s << PORTING_FUNCTIONS_CRESET << endl;
             exit(-1);
         }
