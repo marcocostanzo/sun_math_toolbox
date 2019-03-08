@@ -356,11 +356,9 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         return q.getV();
     }
     UnitQuaternion UnitQuaternion::operator*(const UnitQuaternion& q2) const{
-        cout << "ciao*UnitQuaternion " << endl;
         return mtimes(q2);
     }
     Quaternion UnitQuaternion::operator*(const Quaternion& q2) const{
-        cout << "ciao*Quaternion " << endl;
         return Quaternion::mtimes(q2);
     }
     Quaternion UnitQuaternion::operator*(const double& s) const{
