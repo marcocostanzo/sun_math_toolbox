@@ -83,7 +83,7 @@ Matrix<4,4> transl( double x, double y, double z ){
 Matrix<4,4> transl( const Vector<3>& tr ){
     return transl( tr[0], tr[1], tr[2] );
 }
-Vector<3> transl( const Matrix<4<4>& T ){
+Vector<3> transl( const Matrix<4,4>& T ){
     return makeVector( T[0][3], T[1][3], T[2][3] );
 }
 ////////////////////////////////////////////////////

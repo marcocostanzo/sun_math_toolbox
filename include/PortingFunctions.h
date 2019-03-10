@@ -118,7 +118,7 @@ bool isHomog(const TooN::Matrix<> &m);
 */
 TooN::Matrix<4,4> transl( const TooN::Vector<3>& tr );
 TooN::Matrix<4,4> transl( double x, double y, double z );
-TooN::Vector<3> transl( const TooN::Matrix<4<4>& T );
+TooN::Vector<3> transl( const TooN::Matrix<4,4>& T );
 
 /*
 %T2R Rotational submatrix
