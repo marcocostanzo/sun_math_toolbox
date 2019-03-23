@@ -723,7 +723,17 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         //Using modified version of sign() function as per the paper
         //  sign(x) = 1 if x>=0
 
-        double s = sqrt(trace(R)+1.0)/2.0;
+        double trace_1 = trace(R)+1.0;
+        if( trace_1 < 0.0  ){
+            if( trace_1 > -10.0*std::numeric_limits<double>::epsilon() ){
+                trace_1 = 0.0; //<- Numeric fix
+            } else {
+                // trace+1 is negative for another reason
+                cout << PORTING_FUNCTIONS_FAIL_COLOR "[UnitQuaternion] Error in r2q( const Matrix<3>& R ): sqrt(" << trace_1 << ")!... please contact the mantainer" PORTING_FUNCTIONS_CRESET << endl;
+                exit(-1); 
+            }
+        }
+        double s = sqrt(trace_1)/2.0;
         double kx = R[2][1] - R[1][2];   // Oz - Ay
         double ky = R[0][2] - R[2][0];   // Ax - Nz
         double kz = R[1][0] - R[0][1];   // Ny - Ox
