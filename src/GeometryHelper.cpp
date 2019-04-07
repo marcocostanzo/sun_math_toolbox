@@ -43,6 +43,25 @@ Vector<> abs(const Vector<> &v)
     return v_out;
 }
 
+double max(const Vector<> &v ){
+    double m = v[0];
+    for(int i=1; i<v.size(); i++ ){
+        if( v[i] > m ){
+            m = v[i];
+        }
+    }
+    return m;
+}
+
+double min(const Vector<> &v ){
+    double m = v[0];
+    for(int i=1; i<v.size(); i++ ){
+        if( v[i] < m ){
+            m = v[i];
+        }
+    }
+    return m;
+}
 
 double sum(const Vector<> &v)
 {

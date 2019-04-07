@@ -42,6 +42,16 @@ the elements of V
 TooN::Vector<> abs(const TooN::Vector<> &v);
 
 /*
+max(V) return the maximun element of V
+*/
+double max(const TooN::Vector<> &v );
+
+/*
+min(V) return the minimum element of V
+*/
+double min(const TooN::Vector<> &v );
+
+/*
 sum(V) is the sum of all the elements of a V
 */
 double sum(const TooN::Vector<> &v);
