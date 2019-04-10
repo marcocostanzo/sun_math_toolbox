@@ -83,6 +83,7 @@ class UnitQuaternion : public Quaternion {
         Note: if the input is not unit it will be normalized and a warning will be printed
     */
     UnitQuaternion( double s, const TooN::Vector<3>& v );
+    UnitQuaternion( const TooN::Vector<3>& v, double s );
 
     /*
         Identity UnitQuaternion 1 <0 0 0>

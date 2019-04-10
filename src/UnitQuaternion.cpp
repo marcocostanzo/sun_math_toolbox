@@ -72,6 +72,10 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
         UnitQuaternion( makeVector( s, v[0], v[1], v[2] ) )
         {}
 
+    UnitQuaternion::UnitQuaternion( const Vector<3>& v, double s ):
+        UnitQuaternion( makeVector( s, v[0], v[1], v[2] ) )
+        {}
+
     //Identity Quaternion 1 <0 0 0>
     UnitQuaternion::UnitQuaternion(){
         _s = 1.0;
