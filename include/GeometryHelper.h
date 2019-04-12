@@ -27,7 +27,7 @@
 #include "TooN/TooN.h"
 #include "TooN/SVD.h"
 
-#define GEOMETRY_HELPER_EPSILON 1E-5
+#define GEOMETRY_HELPER_EPSILON 1.0E-5
 
 /*
 norm(M) is the norm of the Matrix M computed as the 

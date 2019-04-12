@@ -57,7 +57,7 @@ Matrix<3,3> skew( const Vector<3> &v ){
 
 ////////////////////////////////////////////////////
 bool isRot(const Matrix<> &m){
-    if( m.num_cols() == m.num_cols() && m.num_cols() == 3 )
+    if( m.num_cols() == m.num_rows() && m.num_cols() == 3 )
         if( fabs((determinant(m) - 1.0)) < 10.0*GEOMETRY_HELPER_EPSILON  )
             return true;
     return false;
