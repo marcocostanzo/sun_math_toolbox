@@ -309,7 +309,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
     Quaternion UnitQuaternion::dotb(const Vector<3>& omega) const{
         //q * UnitQuaternion.pure(omega)
         Matrix<3,3> E = _s*Identity(3) + skew(_v); //the difference is the PLUS!! +++
-        return Quaternion( -_v*omega, E*omega );
+        return Quaternion( -0.5*_v*omega, 0.5*E*omega );
     }
 
     /*
