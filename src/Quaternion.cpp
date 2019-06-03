@@ -83,7 +83,7 @@ using namespace std;
         return _s;
     }
 
-    Vector<3> Quaternion::getV()  const{
+    const TooN::Vector<3>& Quaternion::getV()  const{
         return _v;
     }
 
