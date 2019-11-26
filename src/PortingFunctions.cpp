@@ -64,7 +64,7 @@ bool isRot(const Matrix<> &m){
 }
 
 bool isHomog(const Matrix<> &m){
-    if( m.num_cols() == m.num_cols() && m.num_cols() == 4 )
+    if( m.num_cols() == m.num_rows() && m.num_cols() == 4 )
         if( m[3][0] == 0.0 && m[3][1] == 0.0 && m[3][2] == 0.0 && m[3][3] == 1.0 )
             return isRot( t2r(m) );
     return false;
@@ -104,7 +104,7 @@ Matrix<4,4> r2t(const Matrix<3,3> &R){
 
 Matrix<4,4> rt2tr(const Matrix<3,3> &R, const Vector<3> &t){
     Matrix<4,4> T = transl(t);
-    T.slice(0,0,3,3) = R;
+    T.slice<0,0,3,3>() = R;
     return T;
 }
 Matrix<4,4> rt2tr(const Vector<3> &t, const Matrix<3,3> &R){
@@ -117,8 +117,7 @@ Vector<3> r2rpy( const Matrix<3,3>& R ){
 
         //Check matrix
         if( !isRot(R) ){
-            cout << PORTING_FUNCTIONS_FAIL_COLOR "[PORTINGFUNCIONS] Error in r2rpy( const Matrix<3,3>& R ): R is not a rotation Matrix!" PORTING_FUNCTIONS_CRESET << endl;
-            exit(-1);
+            throw std::invalid_argument("[PORTINGFUNCIONS] Error in r2rpy( const Matrix<3,3>& R ): R is not a rotation Matrix");
         }
 
         //old ZYX order (as per Paul book)
@@ -168,8 +167,7 @@ Vector<3> r2eul( const Matrix<3,3>& R ){
 
     //Check matrix
     if( !isRot(R) ){
-        cout << PORTING_FUNCTIONS_FAIL_COLOR "[PORTINGFUNCIONS] Error in r2eul( const Matrix<3,3>& R ): R is not a rotation Matrix!" PORTING_FUNCTIONS_CRESET << endl;
-        exit(-1);
+        throw std::invalid_argument("[PORTINGFUNCIONS] Error in r2eul( const Matrix<3,3>& R ): R is not a rotation Matrix");        
     }
 
     /* Method as per Paul, p 69.

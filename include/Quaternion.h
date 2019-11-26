@@ -110,7 +110,7 @@ class Quaternion{
     /*
         Get vector part
     */
-    TooN::Vector<3> getV() const;
+    const TooN::Vector<3>& getV() const;
 
     /*==========END Setters=========*/
 

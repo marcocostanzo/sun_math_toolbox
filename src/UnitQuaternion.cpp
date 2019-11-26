@@ -720,8 +720,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
 
         //Check matrix
         if( !isRot(R) ){
-            cout << PORTING_FUNCTIONS_FAIL_COLOR "[UnitQuaternion] Error in r2q( const Matrix<3>& R ): R is not a rotation Matrix!" PORTING_FUNCTIONS_CRESET << endl;
-            exit(-1);
+            throw std::invalid_argument("[UnitQuaternion] Error in r2q( const Matrix<3,3>& R ): R is not a rotation Matrix");
         }
 
         //Using modified version of sign() function as per the paper
@@ -733,8 +732,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
                 trace_1 = 0.0; //<- Numeric fix
             } else {
                 // trace+1 is negative for another reason
-                cout << PORTING_FUNCTIONS_FAIL_COLOR "[UnitQuaternion] Error in r2q( const Matrix<3>& R ): sqrt(" << trace_1 << ")!... please contact the mantainer" PORTING_FUNCTIONS_CRESET << endl;
-                exit(-1); 
+                throw std::logic_error("[UnitQuaternion] Error in r2q( const Matrix<3,3>& R ): trace+1 of R is negative. Please contact the mantainer."); 
             }
         }
         double s = sqrt(trace_1)/2.0;
@@ -773,8 +771,7 @@ void UnitQuaternion::setV( const TooN::Vector<3>& v ) {}
             }
             default:{
                 /* Default Code */
-                cout << PORTING_FUNCTIONS_FAIL_COLOR "[UnitQuaternion] in r2q(): invalid index in index_max()" PORTING_FUNCTIONS_CRESET << endl;
-                exit(-1);
+                throw std::logic_error("[UnitQuaternion] Error in r2q( const Matrix<3,3>& R ): invalid index in index_max(). Please contact the mantainer."); 
             }
         }
 
