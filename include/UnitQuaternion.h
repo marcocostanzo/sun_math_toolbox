@@ -48,6 +48,10 @@
 #include "Quaternion.h"
 #include "AngVec.h"
 
+//!  UnitQuaternion class to represent a Rotation.
+/*!
+    \sa Quaternion
+*/ 
 class UnitQuaternion : public Quaternion {
 
     private:
@@ -56,12 +60,12 @@ class UnitQuaternion : public Quaternion {
 
     /*==========Setters=========*/
 
-    /*
+    /*!
         Set scalar part, this is not allowed for unitQuaternion that must to be UNIT
     */
     virtual void setS( double s );
 
-    /*
+    /*!
         Set vector part, this is not allowed for unitQuaternion that must to be UNIT
     */
     virtual void setV( const TooN::Vector<3>& v );
@@ -72,61 +76,61 @@ class UnitQuaternion : public Quaternion {
 
     /*==========CONSTRUCTORS=========*/
 
-    /*
+    /*!
         UnitQuaternion from a Vector<4>
         Note: if the input vector is not unit it will be normalized and a warning will be printed
     */
     UnitQuaternion( const TooN::Vector<4>& q_vec );
 
-    /*
+    /*!
         UnitQuaternion from scalar and vector part
         Note: if the input is not unit it will be normalized and a warning will be printed
     */
     UnitQuaternion( double s, const TooN::Vector<3>& v );
     UnitQuaternion( const TooN::Vector<3>& v, double s );
 
-    /*
+    /*!
         Identity UnitQuaternion 1 <0 0 0>
     */
     UnitQuaternion();
 
-    /*
+    /*!
         UnitQuaternion from Rotation Matrix
     */
     UnitQuaternion( const TooN::Matrix<3,3>& R );
 
-    /*
+    /*!
         UnitQuaternion from Rotation Matrix w. continuity
     */
     UnitQuaternion( const TooN::Matrix<3,3>& R, const UnitQuaternion& oldQ );
 
-    /*
+    /*!
         UnitQuaternion from Homogeneous Transformation Matrix
     */
     UnitQuaternion( const TooN::Matrix<4,4>& T );
 
-    /*
+    /*!
         UnitQuaternion from Homogeneous Transformation Matrix w. continuity
     */
     UnitQuaternion( const TooN::Matrix<4,4>& T, const UnitQuaternion& oldQ );
 
-    /*
+    /*!
         A copy constructor
     */
     UnitQuaternion( const UnitQuaternion& q ) = default;
 
-    /*
+    /*!
         A copy constructor form the parent class Quaternion
         Note: if the input is not unit it will be normalized and a warning will be printed
     */
     UnitQuaternion( const Quaternion& q );
 
-    /*
+    /*!
         A copy constructor for quaternion Continuity
     */
     UnitQuaternion( const UnitQuaternion& q, const UnitQuaternion& oldQ );
 
-    /*
+    /*!
         UnitQuaternion from Axis-Angle
     */
     UnitQuaternion( const AngVec& av );
@@ -134,7 +138,7 @@ class UnitQuaternion : public Quaternion {
     /*==========END ONSTRUCTORS=========*/
 
     /*==========VARIE=========*/
-    /*
+    /*!
         UnitQuaternion.display Display unitquaternion
         
          Q.display() displays a compact string representation of the unit quaternion's value
@@ -162,7 +166,7 @@ class UnitQuaternion : public Quaternion {
     // !invalid covariant return type!
     //virtual UnitQuaternion inv() const;
 
-    /*
+    /*!
         UnitQuaternion.interp Interpolate UnitQuaternions
         
          QI = Q.scale(S, OPTIONS) is a UnitQuaternion that interpolates between a null
@@ -191,7 +195,7 @@ class UnitQuaternion : public Quaternion {
     UnitQuaternion interp(const UnitQuaternion& q2, double s) const;
 
     
-    /* 
+    /*! 
         UnitQuaternion.increment Update quaternion by angular displacement
         
          QU = Q.increment(omega) updates Q by a rotation which is given as a spatial
@@ -202,7 +206,7 @@ class UnitQuaternion : public Quaternion {
     */
     UnitQuaternion increment( const TooN::Vector<3>& w ) const;
 
-    /*
+    /*!
         UnitQuaternion.angle Angle between two UnitQuaternions
         
          Q1.theta(Q2) is the angle (in radians) between two UnitQuaternions Q1 and Q2.
@@ -219,7 +223,7 @@ class UnitQuaternion : public Quaternion {
     */
     double angle( const UnitQuaternion& q2 ) const;
 
-    /*
+    /*!
         UnitQuaternion.dot Quaternion derivative
         
          QD = Q.dot(omega) is the rate of change in the world frame of a body
@@ -238,7 +242,7 @@ class UnitQuaternion : public Quaternion {
     //The return type is not UnitQuaternion
     Quaternion dot(const TooN::Vector<3>& omega) const;
 
-    /*
+    /*!
         UnitQuaternion.dotb Quaternion derivative IN BODY FRAME
         
          QD = Q.dotb(omega) is the rate of change in the BODY frame of a body frame
@@ -256,7 +260,7 @@ class UnitQuaternion : public Quaternion {
     */
     Quaternion dotb(const TooN::Vector<3>& omega) const;
 
-    /*
+    /*!
         UnitQuaternion.angvec Convert to angle-vector form
         
          [TH,V] = Q.toangvec() as above but also returns a unit vector
@@ -274,7 +278,7 @@ class UnitQuaternion : public Quaternion {
 
     /*======ARITHMETIC OPERATORS======*/
 
-    /*
+    /*!
         UnitQuaternion.mtimes Multiply unit quaternions
         
          Q1*Q2   is a UnitQuaternion object formed by Hamilton product
@@ -296,7 +300,7 @@ class UnitQuaternion : public Quaternion {
     TooN::Vector<3> operator*(const TooN::Vector<3>& v) const;
 
 
-    /*
+    /*!
         UnitQuaternion.mrdivide Divide unit quaternions
         
          Q1/Q2   is a UnitQuaternion object formed by Hamilton product of Q1 and
@@ -325,7 +329,7 @@ class UnitQuaternion : public Quaternion {
 
     /*======TYPE CONVERSION METHODS======*/
 
-        /*
+        /*!
             compact string representation of the quaternion's value
             as a 4-tuple.  If Q is a vector then S has one line per element.
         */
@@ -336,18 +340,17 @@ class UnitQuaternion : public Quaternion {
         */
         friend std::ostream &operator<<( std::ostream &output, const UnitQuaternion &q );
 
-        /*
+        /*!
             UnitQuaternion.R Convert to orthonormal rotation matrix
             
              R = Q.R() is the equivalent SO(3) orthonormal rotation matrix (3x3).
             
              See also UnitQuaternion.T, UnitQuaternion.SO3.
         */
-
         TooN::Matrix<3,3> R() const;
 
 
-        /*
+        /*!
             UnitQuaternion.T Convert to homogeneous transformation matrix
             
              T = Q.T() is the equivalent SE(3) homogeneous transformation 
@@ -358,10 +361,9 @@ class UnitQuaternion : public Quaternion {
             
              See also UnitQuaternion.R, UnitQuaternion.SE3.
         */
-
         TooN::Matrix<4,4> T() const;
 
-        /*
+        /*!
             UnitQuaternion.torpy Convert to roll-pitch-yaw angle form.
             
              RPY = Q.torpy() are the roll-pitch-yaw angles (1x3) corresponding to
@@ -380,7 +382,7 @@ class UnitQuaternion : public Quaternion {
         */
         TooN::Vector<3> torpy() const;
 
-        /*
+        /*!
             UnitQuaternion.toeul Convert to roll-pitch-yaw angle form.
             
              EUL = Q.toeul(OPTIONS) are the Euler angles (1x3) corresponding to
@@ -399,7 +401,7 @@ class UnitQuaternion : public Quaternion {
         TooN::Vector<3> toeul() const;
 
 
-        /*
+        /*!
             UnitQuaternion.tovec Convert to unique 3-vector
             
              V = Q.tovec() is a vector (1x3) that uniquely represents the UnitQuaternion.  The scalar
@@ -415,7 +417,7 @@ class UnitQuaternion : public Quaternion {
         TooN::Vector<3> tovec() const;
 
 
-        /*
+        /*!
             overloaded version for UnitQuaternions to support double mapping
         */
         bool eq(const UnitQuaternion& q2) const;
@@ -425,7 +427,7 @@ class UnitQuaternion : public Quaternion {
         bool operator!=(const UnitQuaternion& q2) const;
         bool operator!=(const Quaternion& q2) const;
 
-        /*
+        /*!
             TOROT   Convert UnitQuaternion to homogeneous transform
             
                T = q2tr(Q)
@@ -444,7 +446,7 @@ class UnitQuaternion : public Quaternion {
 
     /*=== STATIC FACTORY METHODS, ALTERNATIVE CONSTRUCTORS ==*/
 
-    /*
+    /*!
         UnitQuaternion.Rx Construct from rotation about x-axis
         
          Q = UnitQuaternion.Rx(ANGLE) is a UnitQuaternion representing rotation of ANGLE about the x-axis.
@@ -453,7 +455,7 @@ class UnitQuaternion : public Quaternion {
     */
     static UnitQuaternion Rx(double angle);
 
-    /*
+    /*!
         UnitQuaternion.Ry Construct from rotation about y-axis
         
          Q = UnitQuaternion.Ry(ANGLE) is a UnitQuaternion representing rotation of ANGLE about the y-axis.
@@ -462,7 +464,7 @@ class UnitQuaternion : public Quaternion {
     */
     static UnitQuaternion Ry(double angle);
     
-    /*
+    /*!
         UnitQuaternion.Rz Construct from rotation about z-axis
         
          Q = UnitQuaternion.Rz(ANGLE) is a UnitQuaternion representing rotation of ANGLE about the z-axis.
@@ -471,7 +473,7 @@ class UnitQuaternion : public Quaternion {
     */
     static UnitQuaternion Rz(double angle);
 
-    /*
+    /*!
         UnitQuaternion.omega Construct from angle times rotation vector
         
          Q = UnitQuaternion.omega(W) is a UnitQuaternion representing rotation of |W| about the vector W (3x1).
@@ -482,7 +484,7 @@ class UnitQuaternion : public Quaternion {
     static UnitQuaternion omega( double wx, double wy, double wz);
     static UnitQuaternion fromAxisAngle( double theta, const TooN::Vector<3>& w );
 
-    /*
+    /*!
         UnitQuaternion.angvec Construct from angle and rotation vector
         
          Q = UnitQuaternion.angvec(TH, V) is a UnitQuaternion representing rotation of TH about the vector V (3x1).
@@ -492,7 +494,7 @@ class UnitQuaternion : public Quaternion {
     static UnitQuaternion angvec(double theta, const TooN::Vector<3>& v);
 
 
-    /*
+    /*!
         UnitQuaternion.rpy Construct from roll-pitch-yaw angles
         
          Q = UnitQuaternion.rpy(ROLL, PITCH, YAW) is a UnitQuaternion
@@ -510,7 +512,7 @@ class UnitQuaternion : public Quaternion {
     static UnitQuaternion rpy( double roll, double pitch, double yaw );
     static UnitQuaternion rpy( const TooN::Vector<3>& v_rpy );
 
-    /*
+    /*!
         UnitQuaternion.eul Construct from Euler angles
         
          Q = UnitQuaternion.eul(PHI, THETA, PSI) is a UnitQuaternion
@@ -521,7 +523,7 @@ class UnitQuaternion : public Quaternion {
     static UnitQuaternion eul( double phi, double theta, double psi );
     static UnitQuaternion eul( const TooN::Vector<3>& v_eul );
 
-    /*
+    /*!
         UnitQuaternion.vec Construct from 3-vector
         
          Q = UnitQuaternion.vec(V) is a UnitQuaternion constructed from just its vector
@@ -540,7 +542,7 @@ class UnitQuaternion : public Quaternion {
 
     /*=== OTHER STATIC FACTORY METHODS, ALTERNATIVE CONSTRUCTORS ==*/
 
-    /*
+    /*!
         TR2Q   Convert homogeneous transform to a UnitQuaternion
         
            Q = tr2q(T)
@@ -554,7 +556,7 @@ class UnitQuaternion : public Quaternion {
     static UnitQuaternion r2q( const TooN::Matrix<3>& R );
 
 
-    /*
+    /*!
         TOROT   Convert UnitQuaternion to homogeneous transform
         
            T = q2tr(Q)

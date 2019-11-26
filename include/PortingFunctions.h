@@ -51,13 +51,18 @@
 #define PORTING_FUNCTIONS_WARN_COLOR     "\033[1m\033[33m"      /* Bold Yellow */
 #define PORTING_FUNCTIONS_CRESET         "\033[0m"
 
-//! SKEW Create skew-symmetric matrix.
+//! Create skew-symmetric matrix.
 /*!
-    S = SKEW(V) is a skew-symmetric matrix formed from V.
+    S = skew(V) is a skew-symmetric matrix formed from V.
 
-        |  0  -vz   vy |
-    S = | vz    0  -vx |
-        |-vy   vx    0 |
+    \f[
+    S=
+    \left[ {\begin{array}{ccc}
+    0  & -v_z &  v_y \\
+    v_z &   0 & -v_x \\
+    -v_y &  v_x &   0
+    \end{array} } \right]
+    \f]
 
     Notes::
         - This is the inverse of the function VEX().
@@ -66,33 +71,32 @@
     References::
         - Robotics, Vision & Control: Second Edition, Chap 2, P. Corke, Springer 2016.
 
-    See also SKEWA, VEX.
-
     \param V Input vector [vx vy vz].
     \return The skew-symmetric matrix
     \sa SKEWA(), VEX()
 */
 TooN::Matrix<3,3> skew( const TooN::Vector<3>& v );
 
-/*
-% ISROT Test if SO(3) rotation matrix
-%
-% ISROT(R) is true (1) if the argument is a rotation matrix, else false (0).
-%
-% Notes::
-% - A valid rotation matrix has determinant of 1.
-%
-% See also ISHOMOG.
+//! Test if SO(3) rotation matrix.
+/*!
+    isRot(R) is true (1) if the argument is a rotation matrix, else false (0).
+
+    Notes::
+        - A valid rotation matrix has determinant of 1.
+
+    \param m Input matrix to be tested.
+    \return true if the argument is a rotation matrix, else false.
+    \sa isHomog()
 */
 bool isRot(const TooN::Matrix<> &m);
 
-/*
-%ISHOMOG Test if SE(3) homogeneous transformation matrix
-%
-% ISHOMOG(T) is true (1) if the argument T is a Homogeneous transformation matrix, else 
-% false (0).
-%
-% See also ISROT.
+//! Test if SE(3) homogeneous transformation matrix.
+/*!
+    isHomog(T) is true (1) if the argument T is a Homogeneous transformation matrix, else false (0).
+
+    \param m Input matrix to be tested.
+    \return true if the argument is a Homogeneous transformation matrix, else false.
+    \sa isRot()
 */
 bool isHomog(const TooN::Matrix<> &m);
 
@@ -116,53 +120,102 @@ bool isHomog(const TooN::Matrix<> &m);
 % - Somewhat unusually this function performs a function and its inverse.  An
 %   historical anomaly.
 */
-TooN::Matrix<4,4> transl( const TooN::Vector<3>& tr );
+//! Create an SE(3) translational homogeneous transform.
+/*!
+    T = transl(X, Y, Z) is an SE(3) homogeneous transform (4x4) representing a pure translation of X, Y and Z.
+
+    \param x Translation in the x direction.
+    \param y Translation in the y direction.
+    \param z Translation in the z direction.
+    \return An SE(3) Homogeneous transformation matrix.
+    \sa transl( const TooN::Vector<3>& tr ), transl( const TooN::Matrix<4,4>& T )
+*/
 TooN::Matrix<4,4> transl( double x, double y, double z );
+
+//! Create an SE(3) translational homogeneous transform.
+/*!
+    T = transl(P) is an SE(3) homogeneous transform (4x4) representing a translation of P=[X,Y,Z].
+
+    \param tr Translation vector [x y z].
+    \return An SE(3) Homogeneous transformation matrix.
+    \sa transl( double x, double y, double z ), transl( const TooN::Matrix<4,4>& T )
+*/
+TooN::Matrix<4,4> transl( const TooN::Vector<3>& tr );
+
+//! Extract the translational part of an SE(3) matrix.
+/*!
+    P = transl(T) is the translational part of a homogeneous transform T as a 3-element column vector.
+    
+    This does NOT check if the matrix is SE(3)
+
+    \param T An SE(3) Homogeneous transformation matrix.
+    \return The translational part of T.
+    \sa transl( double x, double y, double z ), transl( const TooN::Vector<3>& tr )
+*/
 TooN::Vector<3> transl( const TooN::Matrix<4,4>& T );
 
-/*
-%T2R Rotational submatrix
-%
-% R = T2R(T) is the orthonormal rotation matrix component of homogeneous
-% transformation matrix T.  Works for T in SE(3)
-%
-% Notes::
-% - The validity of rotational part is not checked
-%
-% See also R2T, RT2TR.
+//! Rotational submatrix.
+/*!
+    R = t2r(T) is the orthonormal rotation matrix component of homogeneous transformation matrix T. 
+    
+    Works for T in SE(3).
+    
+    Notes::
+        - The validity of rotational part is not checked
+
+    \param T An SE(3) Homogeneous transformation matrix.
+    \return The rotational part of T.
+    \sa r2t, rt2tr
 */
 TooN::Matrix<3,3> t2r(const TooN::Matrix<4,4> &T);
 
-/*
-%R2T Convert rotation matrix to a homogeneous transform
-%
-% T = R2T(R) is or SE(3) homogeneous transform equivalent to an
-% SO(3) orthonormal rotation matrix R with a zero translational
-% component. Works for T in SE(3):
-%
-% Notes::
-% - Translational component is zero.
-%
-% See also T2R.
+//! Convert rotation matrix to a homogeneous transform.
+/*!
+    T = r2t(R) is or SE(3) homogeneous transform equivalent to an SO(3) orthonormal rotation matrix R with a zero translational component.
+    Works for T in SE(3):
+    
+    Works for T in SE(3).
+    
+    Notes::
+        - Translational component is zero.
+
+    \param R An SO(3) rotation matrix.
+    \return The corresponding SE(3) Matrix.
+    \sa t2r
 */
 TooN::Matrix<4,4> r2t(const TooN::Matrix<3,3> &R);
 
-/*
-%RT2TR Convert rotation and translation to homogeneous transform
-%
-% TR = RT2TR(R, t) is a homogeneous transformation matrix (4x4) formed
-% from an orthonormal rotation matrix R (3x3) and a translation vector t
-% (3x1).  Works for R in SO(3):
-%
-% Notes::
-% - The validity of R is not checked
-%
-% See also T2R, R2T, TR2RT.
+//! Convert rotation and translation to homogeneous transform.
+/*!
+    TR = rt2tr(R, t) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and a translation vector t (3x1).
+    
+    Works for R in SO(3).
+    
+    Notes::
+        - The validity of R is not checked
+
+    \param R An SO(3) rotation matrix.
+    \return The corresponding SE(3) Matrix.
+    \sa t2r, r2t, tr2rt, rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R)
 */
 TooN::Matrix<4,4> rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t);
+
+//! Convert rotation and translation to homogeneous transform.
+/*!
+    TR = rt2tr(t, R) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and a translation vector t (3x1).
+    
+    Works for R in SO(3).
+    
+    Notes::
+        - The validity of R is not checked
+
+    \param R An SO(3) rotation matrix.
+    \return The corresponding SE(3) Matrix.
+    \sa t2r, r2t, tr2rt, rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t)
+*/
 TooN::Matrix<4,4> rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R);
 
-/*
+/*!
 %TR2RPY/R2RPY Convert a homogeneous transform / Rotation Matrix to roll-pitch-yaw angles
 %
 % RPY = TR2RPY(T) are the roll-pitch-yaw angles (1x3)
@@ -185,7 +238,7 @@ TooN::Matrix<4,4> rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R);
 TooN::Vector<3> r2rpy( const TooN::Matrix<3,3>& R );
 TooN::Vector<3> tr2rpy( const TooN::Matrix<4,4>& T );
 
-/*
+/*!
 %RPY2TR/RPY2R Roll-pitch-yaw angles to homogeneous transform
 %
 % T = RPY2TR(ROLL, PITCH, YAW) is an SE(3) homogeneous
@@ -206,7 +259,7 @@ TooN::Matrix<3,3> rpy2r( TooN::Vector<3> &rpy );
 TooN::Matrix<4,4> rpy2tr( double roll, double pitch, double yaw );
 TooN::Matrix<4,4> rpy2tr( TooN::Vector<3> &rpy );
 
-/*
+/*!
 %TR2EUL/R2EUL Convert homogeneous transform to Euler angles
 %
 % EUL = TR2EUL(T) are the ZYZ Euler angles (1x3) corresponding to
@@ -228,7 +281,7 @@ TooN::Matrix<4,4> rpy2tr( TooN::Vector<3> &rpy );
 TooN::Vector<3> r2eul( const TooN::Matrix<3,3>& R );
 TooN::Vector<3> tr2eul( const TooN::Matrix<4,4>& T );
 
-/*
+/*!
 %EUL2TR/EUL2R Convert Euler angles to homogeneous transform
 %
 % T = EUL2TR(PHI, THETA, PSI) is an SE(3) homogeneous

@@ -28,95 +28,80 @@
 
 #include "TooN/TooN.h"
 
+
+//!  Angle Vector class to represent a rotation. 
 class AngVec{
     
     private:
 
     protected:
 
-        /*
-            rotation angle
-        */
+        //! Rotation Angle.
         double _theta;
 
-        /*
-            rotation axis
-        */
+        //! Rotation Axis.
         TooN::Vector<3> _vec;
 
     public:
         
-        /*
-            null rotation about the x-axis
-        */
+        //! null rotation about the x-axis.
         AngVec();
 
-        /*
-            Rotation of angle theta about the vec axis
+        //! Rotation of angle theta about the vec axis
+        /*!
             Note: axis will be normalized by the constructor
         */
         AngVec(double theta, const TooN::Vector<3>& vec);
 
-        /*
-            Rotation of angle theta about the vec axis
+        //! Rotation of angle theta about the vec axis
+        /*!
             Note: axis will be normalized by the constructor
         */
         AngVec(const TooN::Vector<3>& vec, double theta);
 
     //==========GETTERS=========//
-    /*
-        get the angle
-    */
+    
+    //! get the angle
     double getAng() const;
 
-    /*
-        get the angle
-    */
+    //! get the angle
     double getTheta() const;
 
-    /*
-        get the axis
-    */
+    //! get the axis
     TooN::Vector<3> getVec() const;
 
-    /*
-        get the axis
-    */
+    //! get the axis
     TooN::Vector<3> getAx() const;
     //==========================//
 
     //==========SETTERS=========//
 
-    /*
-        set the angle
-    */
+    //! set the angle
     void setAng(double ang);
 
-    /*
-        set the angle
-    */
+    //! set the angle
     void setTheta(double ang);
 
-    /*
-        set the axis
+    //! set the axis
+    /*!
         Note: axis will be normalized
     */
     void setVec( const TooN::Vector<3>& vec );
 
-    /*
-        set the axis
+    //! set the axis
+    /*!
         Note: axis will be normalized
     */
     void setAx( const TooN::Vector<3>& vec );
 
-    /*
-        set angle and axis 
+    //! set the angle and axis
+    /*!
         Note: axis will be normalized
     */
     void set(double ang, const TooN::Vector<3>& vec );
 
-    /*
-        set angle and axis 
+    //! set the angle and axis
+    /*!
         Note: axis will be normalized
     */
     void set(const TooN::Vector<3>& vec, double ang );
