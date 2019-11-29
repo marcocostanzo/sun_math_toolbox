@@ -49,60 +49,100 @@ class AngVec{
 
         //! Rotation of angle theta about the vec axis
         /*!
-            Note: axis will be normalized by the constructor
+            Note: axis will be normalized by the constructor.
+
+            \param theta rotation angle
+            \param vec rotation axis
         */
         AngVec(double theta, const TooN::Vector<3>& vec);
 
-        //! Rotation of angle theta about the vec axis
+        //! Rotation of angle theta about the vec axis.
         /*!
-            Note: axis will be normalized by the constructor
+            Note: axis will be normalized by the constructor.
+
+            \param theta rotation angle.
+            \param vec rotation axis.
         */
         AngVec(const TooN::Vector<3>& vec, double theta);
 
     //==========GETTERS=========//
     
-    //! get the angle
+    //! get the angle.
+    /*!
+        \return The rotation angle.
+        \sa getTheta
+    */
     double getAng() const;
 
-    //! get the angle
+    //! get the angle.
+    /*!
+        \return The rotation angle.
+        \sa getAng
+    */
     double getTheta() const;
 
-    //! get the axis
+    //! get the axis.
+    /*!
+        \return The rotation axis.
+        \sa getAx
+    */
     TooN::Vector<3> getVec() const;
 
-    //! get the axis
+    //! get the axis.
+    /*!
+        \return The rotation axis.
+        \sa getVec
+    */
     TooN::Vector<3> getAx() const;
     //==========================//
 
     //==========SETTERS=========//
 
     //! set the angle
+    /*!
+        \param ang The rotation angle.
+        \sa setTheta, set
+    */
     void setAng(double ang);
 
     //! set the angle
+    /*!
+        \param ang The rotation angle.
+        \sa setAng, set
+    */
     void setTheta(double ang);
 
     //! set the axis
     /*!
         Note: axis will be normalized
+        \param vec the rotation axis
+        \sa setAx, set
     */
     void setVec( const TooN::Vector<3>& vec );
 
     //! set the axis
     /*!
         Note: axis will be normalized
+        \param vec the rotation axis
+        \sa setVec, set
     */
     void setAx( const TooN::Vector<3>& vec );
 
     //! set the angle and axis
     /*!
         Note: axis will be normalized
+        \param ang The rotation angle.
+        \param vec the rotation axis.
+        \sa setAng, setVec
     */
     void set(double ang, const TooN::Vector<3>& vec );
 
     //! set the angle and axis
     /*!
         Note: axis will be normalized
+        \param ang The rotation angle.
+        \param vec the rotation axis.
+        \sa setAng, setVec
     */
     void set(const TooN::Vector<3>& vec, double ang );
     //==========================//

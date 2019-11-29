@@ -45,6 +45,10 @@
 #ifndef ROBOTICS_TOOLBOX_PORTING_FUNCTIONS_H
 #define ROBOTICS_TOOLBOX_PORTING_FUNCTIONS_H
 
+/*! \file PortingFunctions.h
+    \brief C++ implementation of some functions from the Matlab Robotic Toolbox by Peter I. Corke.
+*/
+
 #include "GeometryHelper.h"
 
 #define PORTING_FUNCTIONS_FAIL_COLOR     "\033[1m\033[31m"      /* Bold Red */
@@ -100,26 +104,6 @@ bool isRot(const TooN::Matrix<> &m);
 */
 bool isHomog(const TooN::Matrix<> &m);
 
-/*
-%TRANSL Create an SE(3) translational homogeneous transform
-%
-% Create a translational SE(3) matrix::
-%
-% T = TRANSL(X, Y, Z) is an SE(3) homogeneous transform (4x4) representing
-% a pure translation of X, Y and Z.
-%
-% T = TRANSL(P) is an SE(3) homogeneous transform (4x4) representing a
-% translation of P=[X,Y,Z].
-%
-% Extract the translational part of an SE(3) matrix::
-%
-% P = TRANSL(T) is the translational part of a homogeneous transform T as a
-% 3-element column vector. This does NOT check if the matrix is SE(3)
-%
-% Notes::
-% - Somewhat unusually this function performs a function and its inverse.  An
-%   historical anomaly.
-*/
 //! Create an SE(3) translational homogeneous transform.
 /*!
     T = transl(X, Y, Z) is an SE(3) homogeneous transform (4x4) representing a pure translation of X, Y and Z.
@@ -215,95 +199,196 @@ TooN::Matrix<4,4> rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t);
 */
 TooN::Matrix<4,4> rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R);
 
+//! Rotation Matrix to roll-pitch-yaw angles
 /*!
-%TR2RPY/R2RPY Convert a homogeneous transform / Rotation Matrix to roll-pitch-yaw angles
-%
-% RPY = TR2RPY(T) are the roll-pitch-yaw angles (1x3)
-% corresponding to the rotation part of a homogeneous transform T. The 3
-% angles RPY=[R,P,Y] correspond to sequential rotations about the Z, Y and
-% X axes respectively. Roll and yaw angles in [-pi,pi) while pitch angle
-% in [-pi/2,pi/2).
-%
-% RPY = R2RPY(R) as above but the input is an orthonormal
-% rotation matrix R (3x3).
-%
-% Notes::
-% - This assume the 'zyx' axes
-% - There is a singularity for the case where P=pi/2 in which case R is arbitrarily
-%   set to zero and Y is the sum (R+Y).
-% - Translation component is ignored.
-%
-% See also  rpy2tr, tr2eul.
+RPY = r2rpy(R) are the roll-pitch-yaw angles (1x3)
+corresponding to the rotation matrix R. The 3
+angles RPY=[R,P,Y] correspond to sequential rotations about the Z, Y and
+X axes respectively. Roll and yaw angles in [-pi,pi) while pitch angle
+in [-pi/2,pi/2).
+
+Note::
+    - AXES ZYX
+
+\param R a rotation Marix
+\return vector [roll, pitch, yaw]
+\sa tr2rpy
 */
 TooN::Vector<3> r2rpy( const TooN::Matrix<3,3>& R );
+
+//! Homogeneous Transform Matrix to roll-pitch-yaw angles
+/*!
+RPY = r2rpy(T) are the roll-pitch-yaw angles (1x3)
+corresponding to the rotation part of a homogeneous transform T. The 3
+angles RPY=[R,P,Y] correspond to sequential rotations about the Z, Y and
+X axes respectively. Roll and yaw angles in [-pi,pi) while pitch angle
+in [-pi/2,pi/2).
+
+Note::
+    - AXES ZYX
+
+\param T a homogeneous transform matrix
+\return vector [roll, pitch, yaw]
+\sa r2rpy
+*/
 TooN::Vector<3> tr2rpy( const TooN::Matrix<4,4>& T );
 
+//! Roll-pitch-yaw angles to rotation matrix
 /*!
-%RPY2TR/RPY2R Roll-pitch-yaw angles to homogeneous transform
-%
-% T = RPY2TR(ROLL, PITCH, YAW) is an SE(3) homogeneous
-% transformation matrix (4x4) with zero translation and rotation equivalent
-% to the specified roll, pitch, yaw angles angles. These correspond to
-% rotations about the Z, Y, X axes respectively.
-%
-% T = RPY2TR(RPY) as above but the roll, pitch, yaw angles are
-% taken from the vector (1x3) RPY=[ROLL,PITCH,YAW].
-%
-% Note::
-% - AXES ZYX
-%
-% See also TR2RPY, RPY2R, EUL2TR.
+    Compute the rotation matrix equivalent
+    to the specified roll, pitch, yaw angles angles. These correspond to
+    rotations about the Z, Y, X axes respectively.
+
+    Note::
+        - AXES ZYX
+
+    \param roll roll angle [rad]
+    \param pitch pitch angle [rad]
+    \param yaw yaw angle [rad]
+    \return the rotation matrix
+    \sa rpy2r, rpy2tr
 */
 TooN::Matrix<3,3> rpy2r( double roll, double pitch, double yaw );
+
+//! Roll-pitch-yaw angles to rotation matrix
+/*!
+    Compute the rotation matrix equivalent
+    to the specified roll, pitch, yaw angles angles. These correspond to
+    rotations about the Z, Y, X axes respectively.
+
+    Note::
+        - AXES ZYX
+
+    \param rpy vector containing [roll pitch yaw] [rad]
+    \return the rotation matrix
+    \sa rpy2r, rpy2tr
+*/
 TooN::Matrix<3,3> rpy2r( TooN::Vector<3> &rpy );
+
+//! Roll-pitch-yaw angles to homogeneous transform
+/*!
+    Compute the homogeneous transformation matrix (4x4) with zero 
+    translation and rotation equivalent
+    to the specified roll, pitch, yaw angles angles. These correspond to
+    rotations about the Z, Y, X axes respectively.
+
+    Note::
+        - AXES ZYX
+
+    \param roll roll angle [rad]
+    \param pitch pitch angle [rad]
+    \param yaw yaw angle [rad]
+    \return homogeneous transformation matrix
+    \sa rpy2r, rpy2tr
+*/
 TooN::Matrix<4,4> rpy2tr( double roll, double pitch, double yaw );
+
+//! Roll-pitch-yaw angles to homogeneous transform
+/*!
+    Compute the homogeneous transformation matrix (4x4) with zero 
+    translation and rotation equivalent
+    to the specified roll, pitch, yaw angles angles. These correspond to
+    rotations about the Z, Y, X axes respectively.
+
+    Note::
+        - AXES ZYX
+
+    \param rpy vector containing [roll pitch yaw] [rad]
+    \return homogeneous transformation matrix
+    \sa rpy2r, rpy2tr
+*/
 TooN::Matrix<4,4> rpy2tr( TooN::Vector<3> &rpy );
 
+//! Convert rotation matrix to Euler angles.
 /*!
-%TR2EUL/R2EUL Convert homogeneous transform to Euler angles
-%
-% EUL = TR2EUL(T) are the ZYZ Euler angles (1x3) corresponding to
-% the rotational part of a homogeneous transform T (4x4). The 3 angles
-% EUL=[PHI,THETA,PSI] correspond to sequential rotations about the Z, Y and
-% Z axes respectively.
-%
-% EUL = TR2EUL(R) as above but the input is an orthonormal
-% rotation matrix R (3x3).
-%
-% Notes::
-% - AXES ZYZ
-% - There is a singularity for the case where THETA=0 in which case PHI is arbitrarily
-%   set to zero and PSI is the sum (PHI+PSI).
-% - Translation component is ignored.
-%
-% See also  EUL2TR, TR2RPY.
+    Compute the ZYZ Euler angles (1x3) corresponding to
+    the rotation matrix R (3x3). The 3 angles
+    EUL=[PHI,THETA,PSI] correspond to sequential rotations about the Z, Y and
+    Z axes respectively.
+
+    Notes::
+        - AXES ZYZ
+        - There is a singularity for the case where THETA=0 in which case PHI is arbitrarily
+          set to zero and PSI is the sum (PHI+PSI).
+        - Translation component is ignored.
+
+    \param R a rotation matrix
+    \return a vector containing [PHI,THETA,PSI]
+    \sa tr2eul
 */
 TooN::Vector<3> r2eul( const TooN::Matrix<3,3>& R );
+
+//! Convert homogeneous transform to Euler angles.
+/*!
+    Compute the ZYZ Euler angles (1x3) corresponding to
+    the rotational part of a homogeneous transform T (4x4). The 3 angles
+    EUL=[PHI,THETA,PSI] correspond to sequential rotations about the Z, Y and
+    Z axes respectively.
+
+    Notes::
+        - AXES ZYZ
+        - There is a singularity for the case where THETA=0 in which case PHI is arbitrarily
+          set to zero and PSI is the sum (PHI+PSI).
+        - Translation component is ignored.
+
+    \param T a homogeneous transform matrix
+    \return a vector containing [PHI,THETA,PSI]
+    \sa tr2eul
+*/
 TooN::Vector<3> tr2eul( const TooN::Matrix<4,4>& T );
 
+//! Convert Euler angles to rotation matrix
 /*!
-%EUL2TR/EUL2R Convert Euler angles to homogeneous transform
-%
-% T = EUL2TR(PHI, THETA, PSI) is an SE(3) homogeneous
-% transformation matrix (4x4) with zero translation and rotation equivalent
-% to the specified Euler angles. These correspond to rotations about the Z,
-% Y, Z axes respectively.
-%
-% R = EUL2R(EUL) as above but the Euler angles are taken from the
-% vector (1x3)  EUL = [PHI THETA PSI].
-%
-% Options::
-%  'deg'      Angles given in degrees (radians default)
-%
-% Note::
-% - The vectors PHI, THETA, PSI must be of the same length.
-% - The translational part is zero.
-%
-% See also EUL2R, RPY2TR, TR2EUL, SE3.eul.
+    Compute the SO(3) rotation matrix equivalent
+    to the specified Euler angles. These correspond to rotations about the Z,
+    Y, Z axes respectively.
+
+    \param phi angle around Z [rad]
+    \param theta angle around Y [rad]
+    \param psi angle around Z [rad]
+    \return the corresponding rotation matrix
+    \sa eul2r, eul2tr
 */
 TooN::Matrix<3,3> eul2r( double phi, double theta, double psi );
+
+//! Convert Euler angles to rotation matrix
+/*!
+    Compute the SO(3) rotation matrix equivalent
+    to the specified Euler angles. These correspond to rotations about the Z,
+    Y, Z axes respectively.
+
+    \param eul vector containing [phi, theta, psi] [rad]
+    \return the corresponding rotation matrix
+    \sa eul2r, eul2tr
+*/
 TooN::Matrix<3,3> eul2r( const TooN::Vector<3> &eul );
+
+//! Convert Euler angles to homogeneous transform
+/*!
+    Compute the SE(3) homogeneous
+    transformation matrix (4x4) with zero translation and rotation equivalent
+    to the specified Euler angles. These correspond to rotations about the Z,
+    Y, Z axes respectively.
+
+    \param phi angle around Z [rad]
+    \param theta angle around Y [rad]
+    \param psi angle around Z [rad]
+    \return the corresponding homogeneous transform matrix
+    \sa eul2r, eul2tr
+*/
 TooN::Matrix<4,4> eul2tr( double phi, double theta, double psi );
+
+//! Convert Euler angles to homogeneous transform
+/*!
+    Compute the SE(3) homogeneous
+    transformation matrix (4x4) with zero translation and rotation equivalent
+    to the specified Euler angles. These correspond to rotations about the Z,
+    Y, Z axes respectively.
+
+    \param eul vector containing [phi, theta, psi] [rad]
+    \return the corresponding homogeneous transform matrix
+    \sa eul2r, eul2tr
+*/
 TooN::Matrix<4,4> eul2tr( const TooN::Vector<3> &eul );
 
 #endif
