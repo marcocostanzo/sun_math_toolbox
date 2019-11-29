@@ -45,11 +45,17 @@
 #ifndef QUATERNION_H
 #define QUATERNION_H
 
+/*! \file Quaternion.h
+    \brief C++ implementation of Quaternion class from the Matlab Robotic Toolbox by Peter I. Corke.
+*/
+
 #include "PortingFunctions.h"
 
 //!  Quaternion class to represent a Quaternion.
 /*!
-    \sa UnitQuaternion
+    Note that a Quaternion does not necessary represent a rotation. See the UnitQuaternion class.
+    See Quaternion.h for more functions.
+    \sa UnitQuaternion, Quaternion.h
 */ 
 class Quaternion{
 
@@ -68,12 +74,24 @@ class Quaternion{
     /*==========CONSTRUCTORS=========*/
 
     //!  Full Constructor
+    /*!
+        Costructor that takes the scalar part s and the vectorial part v
+        \param s scalar part
+        \param v vectorial part
+    */
     Quaternion( double s, const TooN::Vector<3>& v );
 
     //!  Zero Quaternion
+    /*!
+        The quaternion 0,<<0,0,0>>
+    */
     Quaternion();
 
     //! Quaternion from a Vector<4>
+    /*!
+        Quaternion from a vector.
+        \param q_vec is the vector [w x y z] where w is the scalar part
+    */
     Quaternion( const TooN::Vector<4>& q_vec );
 
     /*==========END ONSTRUCTORS=========*/
@@ -82,9 +100,15 @@ class Quaternion{
     /*==========Setters=========*/
 
     //! Set scalar part
+    /*!
+        \param s scalar part
+    */
     virtual void setS( double s );
 
     //! Set vector part
+    /*!
+        \param v vector part
+    */
     virtual void setV( const TooN::Vector<3>& v );
 
     /*==========END Setters=========*/
@@ -101,8 +125,8 @@ class Quaternion{
 
     /*=========VARIE==============*/
 
+    //! Display Quaternion on the std output
     /*!
-        Quaternion.display Display quaternion
         
          Q.display() displays a compact string representation of the quaternion's value
          as a 4-tuple.
@@ -111,7 +135,6 @@ class Quaternion{
          - The vector part is displayed with double brackets << 1, 0, 0 >> to
            distinguish it from a UnitQuaternion which displays as < 1, 0, 0 >
         
-         See also Quaternion.string.
     */
     void display() const;
 
@@ -119,25 +142,23 @@ class Quaternion{
 
     /*======QUATERNION FUNCTIONS======*/
 
-    /*!
-        Quaternion.conj Conjugate of a quaternion
-        
+    //! Conjugate of a quaternion
+    /*!        
          QI = Q.conj() is a quaternion object representing the conjugate of Q.
        
          Notes::
          - Conjugatation changes the sign of the vector component.
         
-         See also Quaternion.inv.
+         \sa inv
     */
     Quaternion conj() const;
 
 
-    /*!
-        Quaternion.inv Invert a quaternion
-        
+    //! Invert a quaternion
+    /*!        
          QI = Q.inv() is a quaternion object representing the inverse of Q.
         
-         See also Quaternion.conj.
+         \sa conj
     */
     Quaternion inv() const;
 
@@ -189,14 +210,19 @@ class Quaternion{
          Notes::
          - This matrix is not unique, other matrices will serve the purpose for
            multiplication, see https://en.wikipedia.org/wiki/Quaternion#Matrix_representations
+
          - The determinant of the matrix is the norm of the quaternion to the fourth power. 
         
          See also Quaternion.double, Quaternion.mtimes.
 
         Matlab Version (rememeber that matlab is 1-based):
+
             m = [q.s    -q.v(1) -q.v(2) -q.v(3)
+
                  q.v(1)  q.s    -q.v(3)  q.v(2)
+
                  q.v(2)  q.v(3)  q.s    -q.v(1)
+
                  q.v(3) -q.v(2)  q.v(1)  q.s];
     */
     TooN::Matrix<4,4> matrix() const;
@@ -220,6 +246,7 @@ class Quaternion{
 
     /*======ARITHMETIC OPERATORS======*/   
         
+        //! Multiply a quaternion object
         /*!
             Quaternion.mtimes Multiply a quaternion object
             
@@ -233,11 +260,27 @@ class Quaternion{
              See also Quaternion.mrdivide, Quaternion.mpower.
         */
         Quaternion mtimes(const Quaternion& q2) const;
+
+        //! Multiply a quaternion object
+        /*!
+            \sa mtimes
+        */
         Quaternion mtimes(double s) const;
+
+        //! Multiply a quaternion object
+        /*!
+            \sa mtimes
+        */
         Quaternion operator*(const Quaternion& q2) const;
+
+        //! Multiply a quaternion object
+        /*!
+            \sa mtimes
+        */
         Quaternion operator*(const double& s) const;
 
 
+        //! Quaternion quotient.
         /*!
             Quaternion.mrdivide Quaternion quotient.
             
@@ -250,10 +293,26 @@ class Quaternion{
              See also Quaternion.mtimes, Quaternion.mpower, Quaternion.plus, Quaternion.minus.
         */
         Quaternion mrdivide(const Quaternion& q2) const;
+
+        //! Quaternion quotient.
+        /*!
+            \sa mrdivide
+        */
         Quaternion mrdivide(double s) const;
+
+        //! Quaternion quotient.
+        /*!
+            \sa mrdivide
+        */
         Quaternion operator/(const Quaternion& q2) const;
+
+        //! Quaternion quotient.
+        /*!
+            \sa mrdivide
+        */
         Quaternion operator/(const double& s) const;
 
+        //! Raise quaternion to integer power
         /*!
             Quaternion.mpower Raise quaternion to integer power
             
@@ -268,8 +327,14 @@ class Quaternion{
              See also Quaternion.mtimes.
         */
         Quaternion mpower(int p) const;
+
+        //! Raise quaternion to integer power
+        /*!
+            \sa mpower
+        */
         Quaternion operator^(const int& p) const;
 
+        //! Add quaternions
         /*!
             PLUS Add quaternions
             
@@ -283,9 +348,15 @@ class Quaternion{
              See also Quaternion.minus.
         */
         Quaternion plus( const Quaternion& q2 ) const;
+
+        //! Add quaternions
+        /*!
+            \sa plus
+        */
         Quaternion operator+(const Quaternion& q2) const;
 
 
+        //! Subtract quaternions
         /*!
             Quaternion.minus Subtract quaternions
             
@@ -299,7 +370,21 @@ class Quaternion{
              See also Quaternion.plus.
         */
         Quaternion minus( const Quaternion& q2 ) const;
+
+        //! Minus
+        /*!
+            This is -Q
+            
+             -Q is a Quaternion formed by -w,<<-x,-y,-z>>.
+            
+             \sa minus
+        */
         Quaternion operator-() const;
+
+        //! Subtract quaternions
+        /*!
+            \sa minus
+        */
         Quaternion operator-(const Quaternion& q2) const;
 
 
@@ -309,10 +394,9 @@ class Quaternion{
 /*======RELATIONAL OPERATORS======*/
 
 
-        /*!
-            ISEQUAL Test quaternion element equality
-            
-             ISEQUAL(Q1,Q2) is true if the quaternions Q1 and Q2 are equal.
+        //! Test quaternion element equality
+        /*!   
+             Q1.ISEQUAL(Q2) is true if the quaternions Q1 and Q2 are equal.
             
              Notes::
              - Used by test suite verifyEqual in addition to eq().
@@ -322,9 +406,8 @@ class Quaternion{
         */
         bool isequal(const Quaternion& q2) const;
 
-        /*! 
-            EQ Test quaternion equality
-            
+        //! Test quaternion element equality
+        /*!   
              Q1==Q2 is true if the quaternions Q1 and Q2 are equal.
             
              Notes::
@@ -336,11 +419,15 @@ class Quaternion{
              See also Quaternion.ne.
         */
         bool eq(const Quaternion& q2) const;
+
+        //! Test quaternion element equality
+        /*!   
+             \sa eq
+        */
         bool operator==(const Quaternion& q2) const;
 
-        /*!
-            NE Test quaternion inequality
-            
+        //! Test quaternion inequality
+        /*!            
              Q1 != Q2 is true if the quaternions Q1 and Q2 are not equal.
             
              Notes::
@@ -352,6 +439,11 @@ class Quaternion{
              See also Quaternion.eq.
         */
         bool ne( const Quaternion& q2 ) const;
+
+        //! Test quaternion inequality
+        /*!            
+             \sa ne
+        */
         bool operator!=(const Quaternion& q2) const;
 
 /*====== END RELATIONAL OPERATORS======*/
@@ -359,20 +451,20 @@ class Quaternion{
 /*======TYPE CONVERSION METHODS======*/
 
     
+        //! ostream operator
         /*!
             compact string representation of the quaternion's value
-            as a 4-tuple.  If Q is a vector then S has one line per element.
+            as a 4-tuple.
         */
-        //operator std::string() const;
         friend std::ostream &operator<<( std::ostream &output, const Quaternion &q );
+        //operator std::string() const;
 
-        /*!
-            Quaternion.getDouble Convert a quaternion to a 4-element vector
-            
-             V = Q.double() is a row vector (1x4) comprising the quaternion elements,
+        //! Convert a quaternion to a 4-element vector
+        /*!            
+             V = Q.double() is a Vector<4> comprising the quaternion elements,
              scalar then vector.
             
-             elements [s vx vy vz].
+             [s vx vy vz].
         */
         TooN::Vector<4> getDouble() const;
 
@@ -382,8 +474,10 @@ class Quaternion{
 /*============OPERATORS==========*/
 
 //*CONJ*//
+//! Conjugate of q
 Quaternion conj(const Quaternion& q);
 //*INV*//
+//! Inverse of q
 Quaternion inv(const Quaternion& q );
 
 //*UNIT*//
@@ -394,64 +488,116 @@ UnitQuaternion unit(const Quaternion& q){
 */
 
 //*NORM*//
+//! norm of q
 double norm(const Quaternion& q);
 
 //*NORM2*//
+//! square norm of q
 double norm2(const Quaternion& q);
 
 //*MATRIX*//
+//! Matrix representation
+/*!
+    \sa Quaternion::matrix()
+*/
 TooN::Matrix<4,4> matrix(const Quaternion& q);
 
 //*INNER*//
+//! inner product
 double inner(const Quaternion& q1, const Quaternion& q2);
 
 //*MTIMES*//
+
+//! Multiply a quaternion object
 Quaternion mtimes(const Quaternion& q1, const Quaternion& q2);
+
+//! Multiply a quaternion object
 Quaternion mtimes(const Quaternion& q1, double s);
+
+//! Multiply a quaternion object
 Quaternion mtimes(double s, const Quaternion& q2);
 //Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 //Quaternion operator*(const Quaternion& q1, const double& s);
+
+//! Multiply a quaternion object
 Quaternion operator*(const double& s, const Quaternion& q2);
 
 //*MRDIVIDE*//
+
+//! Quaternion quotient
 Quaternion mrdivide(const Quaternion& q1, const Quaternion& q2);
+
+//! Quaternion quotient
 Quaternion mrdivide(const Quaternion& q1, double s);
 //Quaternion operator/(const Quaternion& q1, const Quaternion& q2);
 //Quaternion operator/(const Quaternion& q1, const double& s);
 
 //*MPOWER*//
+
+//! Raise quaternion to integer power
 Quaternion mpower(const Quaternion& q1, int p);
 //Quaternion operator^(const Quaternion& q1, const int& p);
 
 //*PLUS*//
+
+//!Add quaternions
 Quaternion plus( const Quaternion& q1, const Quaternion& q2 );
+
+//!Add quaternions
 Quaternion plus( const Quaternion& q1, const TooN::Vector<4>& q2_vec );
+
+//!Add quaternions
 Quaternion plus( const TooN::Vector<4>& q1_vec, const Quaternion& q2 );
+
 //Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
 //Quaternion operator+(const Quaternion& q1, const TooN::Vector<4>& q2_vec);
 //Quaternion operator+(const TooN::Vector<4>& q1_vec, const Quaternion& q2 );
 
         
 //*MINUS*//
+
+//! Subtract quaternions
 Quaternion minus( const Quaternion& q );
+
+//! Subtract quaternions
 Quaternion minus( const Quaternion& q1, const Quaternion& q2 );
+
+//! Subtract quaternions
 Quaternion minus( const Quaternion& q1, const TooN::Vector<4>& q2_vec );
+
+//! Subtract quaternions
 Quaternion minus( const TooN::Vector<4>& q1_vec, const Quaternion& q2 );
+
 //Quaternion operator-(const Quaternion& q );
 //Quaternion operator-(const Quaternion& q1, const Quaternion& q2);
 //Quaternion operator-(const Quaternion& q1, const TooN::Vector<4>& q2_vec);
 //Quaternion operator-(const TooN::Vector<4>& q1_vec, const Quaternion& q2 );
 
 //*EQ*//
+
+//! Test quaternion element equality
 bool isequal(const Quaternion& q1, const Quaternion& q2);
+
+//! Test quaternion element equality
 bool eq(const Quaternion& q1, const Quaternion& q2);
+
 //bool operator==(const Quaternion& q1, const Quaternion& q2);
 
 //*NE*//
+
+//! Test quaternion inequality
 bool ne(const Quaternion& q1, const Quaternion& q2);
 //bool operator!=(const Quaternion& q1, const Quaternion& q2);
 
 //*GETDOUBLE*//
+
+//! Convert a quaternion to a 4-element vector
+/*!            
+    V = Q.double() is a Vector<4> comprising the quaternion elements,
+    scalar then vector.
+            
+    [s vx vy vz].
+*/
 TooN::Vector<4> getDouble(const Quaternion& q);
 
 
