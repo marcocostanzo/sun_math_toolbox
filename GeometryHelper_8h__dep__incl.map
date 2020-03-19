@@ -1,0 +1,9 @@
+<map id="sun_math_toolbox/include/sun_math_toolbox/GeometryHelper.h" name="sun_math_toolbox/include/sun_math_toolbox/GeometryHelper.h">
+<area shape="rect" id="node2" href="$PortingFunctions_8h.html" title="C++ implementation of some functions from the Matlab Robotic Toolbox by Peter I. Corke. " alt="" coords="263,95,508,136"/>
+<area shape="rect" id="node8" href="$GeometryHelper_8cpp.html" title="sun_math_toolbox/src\l/sun_math_toolbox/GeometryHelper.cpp" alt="" coords="532,95,788,136"/>
+<area shape="rect" id="node3" href="$Quaternion_8h.html" title="C++ implementation of Quaternion class from the Matlab Robotic Toolbox by Peter I. Corke. " alt="" coords="151,184,361,225"/>
+<area shape="rect" id="node7" href="$PortingFunctions_8cpp.html" title="sun_math_toolbox/src\l/sun_math_toolbox/PortingFunctions.cpp" alt="" coords="385,184,644,225"/>
+<area shape="rect" id="node4" href="$UnitQuaternion_8h.html" title="C++ implementation of UnitQuaternion class from the Matlab Robotic Toolbox by Peter I..." alt="" coords="12,273,247,315"/>
+<area shape="rect" id="node6" href="$Quaternion_8cpp.html" title="sun_math_toolbox/src\l/sun_math_toolbox/Quaternion.cpp" alt="" coords="271,273,495,315"/>
+<area shape="rect" id="node5" href="$UnitQuaternion_8cpp.html" title="sun_math_toolbox/src\l/sun_math_toolbox/UnitQuaternion.cpp" alt="" coords="5,363,253,404"/>
+</map>

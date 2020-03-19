@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['ne',['ne',['../classsun_1_1Quaternion.html#a168ea8170c596008f2b283189202d724',1,'sun::Quaternion::ne()'],['../namespacesun.html#aa1eb9855e416b01343f726cc01fc1ddf',1,'sun::ne()']]],
+  ['norm',['norm',['../classsun_1_1Quaternion.html#a8381051d43fbf06abc4a0f9facda64f6',1,'sun::Quaternion::norm()'],['../namespacesun.html#ad0cb85223bf240dc8d039dab46dfac2c',1,'sun::norm(const TooN::Matrix&lt; 3 &gt; &amp;M)'],['../namespacesun.html#acef6abcc428d6e332c4a74c0bb2ac469',1,'sun::norm(const Quaternion &amp;q)'],['../namespacesun.html#a392e53302ea262d53e0aac814043c1a5',1,'sun::norm(const Matrix&lt; 3 &gt; &amp;M)']]],
+  ['norm2',['norm2',['../classsun_1_1Quaternion.html#a5ede5e554f14b548a2f261a5c21f66c1',1,'sun::Quaternion::norm2()'],['../namespacesun.html#a042564366d34b855f87a787bc3bcba41',1,'sun::norm2()']]],
+  ['nullspaceproj',['nullSpaceProj',['../namespacesun.html#a1acaf21ae8f4ae886400e4ca52d6996a',1,'sun::nullSpaceProj(const TooN::Matrix&lt;&gt; &amp;M, const TooN::Matrix&lt;&gt; &amp;M_pinv)'],['../namespacesun.html#a1aac9461cac7117688b785d908326a83',1,'sun::nullSpaceProj(const TooN::Matrix&lt;&gt; &amp;M, double condition_number=20.0)'],['../namespacesun.html#aa21097706a059ddefd0ab2c0abe279bd',1,'sun::nullSpaceProj(const Matrix&lt;&gt; &amp;M, const Matrix&lt;&gt; &amp;M_pinv)'],['../namespacesun.html#a29472f8caced629f219f411b84bb6207',1,'sun::nullSpaceProj(const Matrix&lt;&gt; &amp;M, double condition_number)']]]
+];
