@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(robotics_toolbox_ros)
+project(sun_math_toolbox)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
  add_compile_options(-std=c++11)
@@ -120,11 +120,11 @@ include_directories(
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
-  src/GeometryHelper.cpp
-  src/PortingFunctions.cpp
-  src/AngVec.cpp
-  src/Quaternion.cpp
-  src/UnitQuaternion.cpp
+  src/sun_math_toolbox/GeometryHelper.cpp
+  src/sun_math_toolbox/PortingFunctions.cpp
+  src/sun_math_toolbox/AngVec.cpp
+  src/sun_math_toolbox/Quaternion.cpp
+  src/sun_math_toolbox/UnitQuaternion.cpp
 )
 
 ## Add cmake target dependencies of the library

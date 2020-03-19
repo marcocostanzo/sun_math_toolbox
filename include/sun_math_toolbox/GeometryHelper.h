@@ -2,7 +2,7 @@
 
     Geometry Helper Lib
 
-    Copyright 2018 Università della Campania Luigi Vanvitelli
+    Copyright 2018-2020 Università della Campania Luigi Vanvitelli
 
     Author: Marco Costanzo <marco.costanzo@unicampania.it>
 
@@ -28,29 +28,31 @@
     \brief Contains helper functions for geometry.
 */
 
-#include "TooN/TooN.h"
 #include "TooN/SVD.h"
+#include "TooN/TooN.h"
 
 #define GEOMETRY_HELPER_EPSILON 1.0E-5
 
+namespace sun
+{
 //! Higer singular value.
 /*!
-norm(M) is the norm of the Matrix M computed as the 
+norm(M) is the norm of the Matrix M computed as the
 higer singular value.
 
 \param M a matrix.
 \return higer singular value of M
 */
-double norm(const TooN::Matrix<3> &M);
+double norm(const TooN::Matrix<3>& M);
 
 //! abs element wise
 /*!
-abs(V) return the vector composed by the absolute values of 
+abs(V) return the vector composed by the absolute values of
 the elements of V.
 
 \param v a vector.
 */
-TooN::Vector<> abs(const TooN::Vector<> &v);
+TooN::Vector<> abs(const TooN::Vector<>& v);
 
 //! max of a vector
 /*!
@@ -58,7 +60,7 @@ max(V) return the maximun element of V
 
 \param v a vector.
 */
-double max(const TooN::Vector<> &v );
+double max(const TooN::Vector<>& v);
 
 //! min of a vector
 /*!
@@ -66,7 +68,7 @@ min(V) return the minimum element of V
 
 \param v a vector.
 */
-double min(const TooN::Vector<> &v );
+double min(const TooN::Vector<>& v);
 
 //! sum of all elements
 /*!
@@ -74,7 +76,7 @@ sum(V) is the sum of all the elements of a V
 
 \param v a vector.
 */
-double sum(const TooN::Vector<> &v);
+double sum(const TooN::Vector<>& v);
 
 //! rotation around x-axis
 /*!
@@ -83,7 +85,7 @@ a point around the x-axis for an angle.
 
 \param angle rotation angle.
 */
-TooN::Matrix<3,3> rotx( double angle );
+TooN::Matrix<3, 3> rotx(double angle);
 
 //! rotation around y-axis
 /*!
@@ -92,7 +94,7 @@ a point around the y-axis for an angle.
 
 \param angle rotation angle.
 */
-TooN::Matrix<3,3> roty( double angle );
+TooN::Matrix<3, 3> roty(double angle);
 
 //! rotation around z-axis
 /*!
@@ -101,7 +103,7 @@ a point around the z-axis for an angle.
 
 \param angle rotation angle.
 */
-TooN::Matrix<3,3> rotz( double angle );
+TooN::Matrix<3, 3> rotz(double angle);
 
 //! signum
 /*!
@@ -113,7 +115,7 @@ SIGN   Signum function.
 \param n input
 \param zero_out output when n=0
 */
-double sign( double n, int zero_out );
+double sign(double n, int zero_out);
 
 //! signum
 /*!
@@ -124,16 +126,16 @@ SIGN   Signum function.
 
 \param n input
 */
-double sign( double n );
+double sign(double n);
 
 //! find the max
 /*!
-index_max( vector ) return the index (0-based) of 
+index_max( vector ) return the index (0-based) of
 the first occurrence of the greather element in the vector
 
 \param v a vector
 */
-int index_max( const TooN::Vector<>& v );
+int index_max(const TooN::Vector<>& v);
 
 //! pinv DLS
 /*!
@@ -142,7 +144,7 @@ int index_max( const TooN::Vector<>& v );
     \param M a matrix
     \param damping damping factor for the DLS
 */
-TooN::Matrix<> pinv_DLS( const TooN::Matrix<>& M, double damping);
+TooN::Matrix<> pinv_DLS(const TooN::Matrix<>& M, double damping);
 
 //! null space projector
 /*!
@@ -152,7 +154,7 @@ TooN::Matrix<> pinv_DLS( const TooN::Matrix<>& M, double damping);
     \param M a matrix
     \param M_pinv pinv of M
 */
-TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M , const TooN::Matrix<>& M_pinv );
+TooN::Matrix<> nullSpaceProj(const TooN::Matrix<>& M, const TooN::Matrix<>& M_pinv);
 
 //! null space projector
 /*!
@@ -162,7 +164,7 @@ TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M , const TooN::Matrix<>& M_
     \param M a matrix
     \param condition_number for the pinv (default 20)
 */
-TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M, double condition_number = 20.0 );
+TooN::Matrix<> nullSpaceProj(const TooN::Matrix<>& M, double condition_number = 20.0);
 
 //! derivate a poly
 /*!
@@ -170,23 +172,25 @@ TooN::Matrix<> nullSpaceProj( const TooN::Matrix<>& M, double condition_number =
 
     coeff = [a_n a_n_1 a_n_2 ... a_0]
 
-    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0
 
     \param coeff vector representing the coefficient of the poly
 */
-TooN::Vector<> polydiff( const TooN::Vector<>& coeff );
+TooN::Vector<> polydiff(const TooN::Vector<>& coeff);
 
 //! devaluate a poly
 /*!
     Evaluate the poly in the point x
 
     coeff = [a_n a_n_1 a_n_2 ... a_0]
-    
-    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0  
+
+    p = a_n*x^n + a_n_1*x^n_1 + ... + a_1*x + a_0
 
     \param coeff vector representing the coefficient of the poly
     \param x variable to use to evaluate the poly
 */
-double polyval( const TooN::Vector<>& coeff , double x );
+double polyval(const TooN::Vector<>& coeff, double x);
+
+}  // namespace sun
 
 #endif

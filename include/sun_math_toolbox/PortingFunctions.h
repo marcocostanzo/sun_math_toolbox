@@ -2,7 +2,7 @@
 
     C++ implementation of some functions from the Matlab Robotic Toolbox by Peter I. Corke.
 
-    Copyright 2018 Università della Campania Luigi Vanvitelli
+    Copyright 2018-2020 Università della Campania Luigi Vanvitelli
 
     Author: Marco Costanzo <marco.costanzo@unicampania.it>
 
@@ -24,17 +24,17 @@
     % Copyright (C) 1993-2017, by Peter I. Corke
     %
     % This file is part of The Robotics Toolbox for MATLAB (RTB).
-    % 
+    %
     % RTB is free software: you can redistribute it and/or modify
     % it under the terms of the GNU Lesser General Public License as published by
     % the Free Software Foundation, either version 3 of the License, or
     % (at your option) any later version.
-    % 
+    %
     % RTB is distributed in the hope that it will be useful,
     % but WITHOUT ANY WARRANTY; without even the implied warranty of
     % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     % GNU Lesser General Public License for more details.
-    % 
+    %
     % You should have received a copy of the GNU Leser General Public License
     % along with RTB.  If not, see <http://www.gnu.org/licenses/>.
     %
@@ -49,12 +49,14 @@
     \brief C++ implementation of some functions from the Matlab Robotic Toolbox by Peter I. Corke.
 */
 
-#include "GeometryHelper.h"
+#include "sun_math_toolbox/GeometryHelper.h"
 
-#define PORTING_FUNCTIONS_FAIL_COLOR     "\033[1m\033[31m"      /* Bold Red */
-#define PORTING_FUNCTIONS_WARN_COLOR     "\033[1m\033[33m"      /* Bold Yellow */
-#define PORTING_FUNCTIONS_CRESET         "\033[0m"
+#define PORTING_FUNCTIONS_FAIL_COLOR "\033[1m\033[31m" /* Bold Red */
+#define PORTING_FUNCTIONS_WARN_COLOR "\033[1m\033[33m" /* Bold Yellow */
+#define PORTING_FUNCTIONS_CRESET "\033[0m"
 
+namespace sun
+{
 //! Create skew-symmetric matrix.
 /*!
     S = skew(V) is a skew-symmetric matrix formed from V.
@@ -79,7 +81,7 @@
     \return The skew-symmetric matrix
     \sa SKEWA(), VEX()
 */
-TooN::Matrix<3,3> skew( const TooN::Vector<3>& v );
+TooN::Matrix<3, 3> skew(const TooN::Vector<3> &v);
 
 //! Test if SO(3) rotation matrix.
 /*!
@@ -114,7 +116,7 @@ bool isHomog(const TooN::Matrix<> &m);
     \return An SE(3) Homogeneous transformation matrix.
     \sa transl( const TooN::Vector<3>& tr ), transl( const TooN::Matrix<4,4>& T )
 */
-TooN::Matrix<4,4> transl( double x, double y, double z );
+TooN::Matrix<4, 4> transl(double x, double y, double z);
 
 //! Create an SE(3) translational homogeneous transform.
 /*!
@@ -124,26 +126,26 @@ TooN::Matrix<4,4> transl( double x, double y, double z );
     \return An SE(3) Homogeneous transformation matrix.
     \sa transl( double x, double y, double z ), transl( const TooN::Matrix<4,4>& T )
 */
-TooN::Matrix<4,4> transl( const TooN::Vector<3>& tr );
+TooN::Matrix<4, 4> transl(const TooN::Vector<3> &tr);
 
 //! Extract the translational part of an SE(3) matrix.
 /*!
     P = transl(T) is the translational part of a homogeneous transform T as a 3-element column vector.
-    
+
     This does NOT check if the matrix is SE(3)
 
     \param T An SE(3) Homogeneous transformation matrix.
     \return The translational part of T.
     \sa transl( double x, double y, double z ), transl( const TooN::Vector<3>& tr )
 */
-TooN::Vector<3> transl( const TooN::Matrix<4,4>& T );
+TooN::Vector<3> transl(const TooN::Matrix<4, 4> &T);
 
 //! Rotational submatrix.
 /*!
-    R = t2r(T) is the orthonormal rotation matrix component of homogeneous transformation matrix T. 
-    
+    R = t2r(T) is the orthonormal rotation matrix component of homogeneous transformation matrix T.
+
     Works for T in SE(3).
-    
+
     Notes::
         - The validity of rotational part is not checked
 
@@ -151,15 +153,15 @@ TooN::Vector<3> transl( const TooN::Matrix<4,4>& T );
     \return The rotational part of T.
     \sa r2t, rt2tr
 */
-TooN::Matrix<3,3> t2r(const TooN::Matrix<4,4> &T);
+TooN::Matrix<3, 3> t2r(const TooN::Matrix<4, 4> &T);
 
 //! Convert rotation matrix to a homogeneous transform.
 /*!
-    T = r2t(R) is or SE(3) homogeneous transform equivalent to an SO(3) orthonormal rotation matrix R with a zero translational component.
-    Works for T in SE(3):
-    
+    T = r2t(R) is or SE(3) homogeneous transform equivalent to an SO(3) orthonormal rotation matrix R with a zero
+   translational component. Works for T in SE(3):
+
     Works for T in SE(3).
-    
+
     Notes::
         - Translational component is zero.
 
@@ -167,14 +169,15 @@ TooN::Matrix<3,3> t2r(const TooN::Matrix<4,4> &T);
     \return The corresponding SE(3) Matrix.
     \sa t2r
 */
-TooN::Matrix<4,4> r2t(const TooN::Matrix<3,3> &R);
+TooN::Matrix<4, 4> r2t(const TooN::Matrix<3, 3> &R);
 
 //! Convert rotation and translation to homogeneous transform.
 /*!
-    TR = rt2tr(R, t) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and a translation vector t (3x1).
-    
+    TR = rt2tr(R, t) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and
+   a translation vector t (3x1).
+
     Works for R in SO(3).
-    
+
     Notes::
         - The validity of R is not checked
 
@@ -182,14 +185,15 @@ TooN::Matrix<4,4> r2t(const TooN::Matrix<3,3> &R);
     \return The corresponding SE(3) Matrix.
     \sa t2r, r2t, tr2rt, rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R)
 */
-TooN::Matrix<4,4> rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t);
+TooN::Matrix<4, 4> rt2tr(const TooN::Matrix<3, 3> &R, const TooN::Vector<3> &t);
 
 //! Convert rotation and translation to homogeneous transform.
 /*!
-    TR = rt2tr(t, R) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and a translation vector t (3x1).
-    
+    TR = rt2tr(t, R) is a homogeneous transformation matrix (4x4) formed from an orthonormal rotation matrix R (3x3) and
+   a translation vector t (3x1).
+
     Works for R in SO(3).
-    
+
     Notes::
         - The validity of R is not checked
 
@@ -197,7 +201,7 @@ TooN::Matrix<4,4> rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t);
     \return The corresponding SE(3) Matrix.
     \sa t2r, r2t, tr2rt, rt2tr(const TooN::Matrix<3,3> &R, const TooN::Vector<3> &t)
 */
-TooN::Matrix<4,4> rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3,3> &R);
+TooN::Matrix<4, 4> rt2tr(const TooN::Vector<3> &t, const TooN::Matrix<3, 3> &R);
 
 //! Rotation Matrix to roll-pitch-yaw angles
 /*!
@@ -214,7 +218,7 @@ Note::
 \return vector [roll, pitch, yaw]
 \sa tr2rpy
 */
-TooN::Vector<3> r2rpy( const TooN::Matrix<3,3>& R );
+TooN::Vector<3> r2rpy(const TooN::Matrix<3, 3> &R);
 
 //! Homogeneous Transform Matrix to roll-pitch-yaw angles
 /*!
@@ -231,7 +235,7 @@ Note::
 \return vector [roll, pitch, yaw]
 \sa r2rpy
 */
-TooN::Vector<3> tr2rpy( const TooN::Matrix<4,4>& T );
+TooN::Vector<3> tr2rpy(const TooN::Matrix<4, 4> &T);
 
 //! Roll-pitch-yaw angles to rotation matrix
 /*!
@@ -248,7 +252,7 @@ TooN::Vector<3> tr2rpy( const TooN::Matrix<4,4>& T );
     \return the rotation matrix
     \sa rpy2r, rpy2tr
 */
-TooN::Matrix<3,3> rpy2r( double roll, double pitch, double yaw );
+TooN::Matrix<3, 3> rpy2r(double roll, double pitch, double yaw);
 
 //! Roll-pitch-yaw angles to rotation matrix
 /*!
@@ -263,11 +267,11 @@ TooN::Matrix<3,3> rpy2r( double roll, double pitch, double yaw );
     \return the rotation matrix
     \sa rpy2r, rpy2tr
 */
-TooN::Matrix<3,3> rpy2r( TooN::Vector<3> &rpy );
+TooN::Matrix<3, 3> rpy2r(TooN::Vector<3> &rpy);
 
 //! Roll-pitch-yaw angles to homogeneous transform
 /*!
-    Compute the homogeneous transformation matrix (4x4) with zero 
+    Compute the homogeneous transformation matrix (4x4) with zero
     translation and rotation equivalent
     to the specified roll, pitch, yaw angles angles. These correspond to
     rotations about the Z, Y, X axes respectively.
@@ -281,11 +285,11 @@ TooN::Matrix<3,3> rpy2r( TooN::Vector<3> &rpy );
     \return homogeneous transformation matrix
     \sa rpy2r, rpy2tr
 */
-TooN::Matrix<4,4> rpy2tr( double roll, double pitch, double yaw );
+TooN::Matrix<4, 4> rpy2tr(double roll, double pitch, double yaw);
 
 //! Roll-pitch-yaw angles to homogeneous transform
 /*!
-    Compute the homogeneous transformation matrix (4x4) with zero 
+    Compute the homogeneous transformation matrix (4x4) with zero
     translation and rotation equivalent
     to the specified roll, pitch, yaw angles angles. These correspond to
     rotations about the Z, Y, X axes respectively.
@@ -297,7 +301,7 @@ TooN::Matrix<4,4> rpy2tr( double roll, double pitch, double yaw );
     \return homogeneous transformation matrix
     \sa rpy2r, rpy2tr
 */
-TooN::Matrix<4,4> rpy2tr( TooN::Vector<3> &rpy );
+TooN::Matrix<4, 4> rpy2tr(TooN::Vector<3> &rpy);
 
 //! Convert rotation matrix to Euler angles.
 /*!
@@ -316,7 +320,7 @@ TooN::Matrix<4,4> rpy2tr( TooN::Vector<3> &rpy );
     \return a vector containing [PHI,THETA,PSI]
     \sa tr2eul
 */
-TooN::Vector<3> r2eul( const TooN::Matrix<3,3>& R );
+TooN::Vector<3> r2eul(const TooN::Matrix<3, 3> &R);
 
 //! Convert homogeneous transform to Euler angles.
 /*!
@@ -335,7 +339,7 @@ TooN::Vector<3> r2eul( const TooN::Matrix<3,3>& R );
     \return a vector containing [PHI,THETA,PSI]
     \sa tr2eul
 */
-TooN::Vector<3> tr2eul( const TooN::Matrix<4,4>& T );
+TooN::Vector<3> tr2eul(const TooN::Matrix<4, 4> &T);
 
 //! Convert Euler angles to rotation matrix
 /*!
@@ -349,7 +353,7 @@ TooN::Vector<3> tr2eul( const TooN::Matrix<4,4>& T );
     \return the corresponding rotation matrix
     \sa eul2r, eul2tr
 */
-TooN::Matrix<3,3> eul2r( double phi, double theta, double psi );
+TooN::Matrix<3, 3> eul2r(double phi, double theta, double psi);
 
 //! Convert Euler angles to rotation matrix
 /*!
@@ -361,7 +365,7 @@ TooN::Matrix<3,3> eul2r( double phi, double theta, double psi );
     \return the corresponding rotation matrix
     \sa eul2r, eul2tr
 */
-TooN::Matrix<3,3> eul2r( const TooN::Vector<3> &eul );
+TooN::Matrix<3, 3> eul2r(const TooN::Vector<3> &eul);
 
 //! Convert Euler angles to homogeneous transform
 /*!
@@ -376,7 +380,7 @@ TooN::Matrix<3,3> eul2r( const TooN::Vector<3> &eul );
     \return the corresponding homogeneous transform matrix
     \sa eul2r, eul2tr
 */
-TooN::Matrix<4,4> eul2tr( double phi, double theta, double psi );
+TooN::Matrix<4, 4> eul2tr(double phi, double theta, double psi);
 
 //! Convert Euler angles to homogeneous transform
 /*!
@@ -389,6 +393,8 @@ TooN::Matrix<4,4> eul2tr( double phi, double theta, double psi );
     \return the corresponding homogeneous transform matrix
     \sa eul2r, eul2tr
 */
-TooN::Matrix<4,4> eul2tr( const TooN::Vector<3> &eul );
+TooN::Matrix<4, 4> eul2tr(const TooN::Vector<3> &eul);
+
+}  // namespace sun
 
 #endif

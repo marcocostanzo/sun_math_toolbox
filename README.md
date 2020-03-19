@@ -1,4 +1,4 @@
-# robotics_toolbox_ros
+# sun_math_toolbox
 porting of the matlab robotics toolbox for catkin and ROS
 
-Documentation: https://marcocostanzo.github.io/robotics_toolbox_ros
+Documentation: https://marcocostanzo.github.io/sun_math_toolbox

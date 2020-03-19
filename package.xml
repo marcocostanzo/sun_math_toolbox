@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>robotics_toolbox_ros</name>
+  <name>sun_math_toolbox</name>
   <version>0.0.0</version>
-  <description>The robotics_toolbox_ros package</description>
+  <description>The sun_math_toolbox package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
