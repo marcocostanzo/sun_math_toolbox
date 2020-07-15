@@ -347,7 +347,7 @@ Quaternion UnitQuaternion::dotb(const Vector<3>& omega) const
 
 AngVec UnitQuaternion::toangvec() const
 {
-  if (norm() < 10.0 * GEOMETRY_HELPER_EPSILON)
+  if ( ::norm(_v) < 10.0 * GEOMETRY_HELPER_EPSILON)
   {
     return AngVec();
   }
