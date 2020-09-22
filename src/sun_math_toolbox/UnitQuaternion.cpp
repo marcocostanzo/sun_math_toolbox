@@ -347,12 +347,23 @@ Quaternion UnitQuaternion::dotb(const Vector<3>& omega) const
 
 AngVec UnitQuaternion::toangvec() const
 {
-  if ( ::norm(_v) < 10.0 * GEOMETRY_HELPER_EPSILON)
+  if (::norm(_v) < 10.0 * GEOMETRY_HELPER_EPSILON)
   {
     return AngVec();
   }
 
-  return AngVec(2.0 * atan2(TooN::norm(_v), _s), unit(_v));
+  // ang wrapped in [-pi pi]
+  double ang = 2.0 * atan2(TooN::norm(_v), _s);
+  if (ang >= (M_PI))
+  {
+    ang = ang - (2.0 * M_PI);
+  }
+  else if (ang <= (-M_PI))
+  {
+    ang = ang + (2.0 * M_PI);
+  }
+
+  return AngVec(ang, unit(_v));
 }
 
 /*======END UNITQUATERNION FUNCTIONS======*/
