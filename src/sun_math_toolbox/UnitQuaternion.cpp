@@ -781,7 +781,7 @@ UnitQuaternion UnitQuaternion::r2q(const Matrix<3>& R)
   // Check matrix
   if (!isRot(R))
   {
-    throw std::invalid_argument("[UnitQuaternion] Error in r2q( const Matrix<3,3>& R ): R is not a rotation Matrix");
+    throw std::invalid_argument("[UnitQuaternion] Error in r2q( const Matrix<3,3>& R ): R is not a rotation Matrix with a numeric error of " + std::to_string(fabs((determinant(R) - 1.0))));
   }
 
   // Using modified version of sign() function as per the paper
@@ -853,7 +853,7 @@ UnitQuaternion UnitQuaternion::r2q(const Matrix<3>& R)
 
   Vector<3> k_vec = makeVector(kx, ky, kz);
   double nm = TooN::norm(k_vec);
-  if (nm == 0)
+  if (nm < 10.0 * std::numeric_limits<double>::epsilon() || fabs(s-1.0) < 10.0 * std::numeric_limits<double>::epsilon()  )
   {
     // handle special case of null quaternion
     return UnitQuaternion();
